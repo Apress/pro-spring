@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<!-- Data source bean -->
+	
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>java:/XASpringDS</value></property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager"/>
+	
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"><value>/WEB-INF/classes/sqlMapConfig.xml</value></property>
+	</bean>
+	
+</beans>

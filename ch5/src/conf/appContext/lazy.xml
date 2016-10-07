@@ -1,0 +1,9 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="destructiveBean" class="com.apress.prospring.ch5.lifecycle.DestructiveBeanWithInterface">
+        <property name="filePath">
+            <value>d:/tmp/test.txt</value>
+        </property>
+    </bean>
+    <bean id="shutdownHook" class="com.apress.prospring.ch5.interaction.ShutdownHookBean" lazy-init="false"/>
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.domain.Attachment" alias="attachment"/>
+	
+	<resultMap class="attachment" id="result">
+		<result property="attachmentId" column="AttachmentId"/>
+		<result property="fileName" column="FileName"/>
+		<result property="contentType" column="ContentType"/>
+		<result property="fileData" column="FileData"/>
+	</resultMap>
+	
+	<select id="getAttachmentById" parameterClass="int" resultMap="result">
+		select
+			*
+		from
+			Attachments
+		where
+			AttachmentId = #value#
+	</select>
+	
+	<select id="getAttachmentByEntry" parameterClass="int" resultMap="result">
+		select
+			a.AttachmentId, a.FileName, a.ContentType, null as FileData
+		from
+			EntryAttachments ea inner join Attachments a on a.AttachmentId = ea.Attachment
+		where
+			ea.Entry = #value#
+	</select>
+	
+	<select id="getAttachmentByComment" parameterClass="int" resultMap="result">
+		select
+			a.AttachmentId, a.FileName, a.ContentType, null as FileData
+		from
+			CommentAttachments ca inner join Attachments a on a.AttachmentId = ca.Attachment
+		where
+			ca.Comment = #value#
+	</select>
+	
+	<insert id="insertAttachment" parameterClass="attachment">
+		insert into Attachments (FileName, ContentType, FileData) values (#fileName#, #contentType#, #fileData#)
+		<selectKey keyProperty="auditId" resultClass="int">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<insert id="insertAttachmentComment" parameterClass="map">
+		insert into CommentAttachments (Attachment, Comment) values (#attachment#, #comment#)
+	</insert>
+	
+	<insert id="insertAttachmentEntry" parameterClass="map">
+		insert into EntryAttachments (Attachment, Entry) values (#attachment#, #entry#)
+	</insert>
+
+</sqlMap>

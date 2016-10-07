@@ -1,0 +1,148 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="renderer" class="com.apress.prospring.ch2.StandardOutMessageRenderer">
+        <property name="messageProvider">
+            <ref local="provider"/>
+        </property>
+    </bean>
+    <!--<bean id="provider" class="com.apress.prospring.ch2.HelloWorldMessageProvider"/>-->
+    
+    <!-- ctor injection -->
+    <bean id="provider" class="com.apress.prospring.ch4.ConfigurableMessageProvider">
+        <constructor-arg>
+            <value>This is a configurable message</value>
+        </constructor-arg>
+    </bean>
+    
+    <!-- ctor confusion -->
+    <bean id="constructorConfusion" class="com.apress.prospring.ch4.ConstructorConfusion">
+        <constructor-arg type="int">
+            <value>90</value>
+        </constructor-arg>
+    </bean>
+    
+    <!-- injecting built-in vals sample -->
+    <bean id="injectSimple" class="com.apress.prospring.ch4.InjectSimple">
+        <property name="name">
+            <value>John Smith</value>
+        </property>
+        <property name="age">
+            <value>35</value>
+        </property>
+        <property name="height">
+            <value>1.78</value>
+        </property>
+        <property name="isProgrammer">
+            <value>true</value>
+        </property>
+        <property name="ageInSeconds">
+            <value>1103760000</value>
+        </property>
+    </bean>
+    
+    <!-- oracle bean used for a few examples -->
+    <bean id="oracle" name="wiseworm" class="com.apress.prospring.ch4.BookwormOracle"/>
+    
+    <!-- injecting reference sample (using id) -->
+    <bean id="injectRef" class="com.apress.prospring.ch4.InjectRef">
+        <property name="oracle">
+            <ref local="oracle"/>
+        </property>
+    </bean>
+
+    <!-- inject ref sample (using name) -->
+    <!-- <bean id="injectRef" class="com.apress.prospring.ch4.InjectRef">
+        <property name="oracle">
+            <ref bean="wiseworm"/>
+        </property>
+    </bean> -->
+    
+    <!-- hierarchical bean factories -->
+    <bean id="target1" class="com.apress.prospring.ch4.SimpleTarget">
+        <property name="val">
+            <ref bean="injectBeanParent"/>
+        </property>
+    </bean>
+    
+    <bean id="target2" class="com.apress.prospring.ch4.SimpleTarget">
+        <property name="val">
+            <ref local="injectBean"/>
+        </property>
+    </bean>
+    
+    <bean id="target3" class="com.apress.prospring.ch4.SimpleTarget">
+        <property name="val">
+            <ref parent="injectBean"/>
+        </property>
+    </bean>
+    
+    <bean id="injectBean" class="java.lang.String">
+           <constructor-arg>
+               <value>Bean In Child</value>
+           </constructor-arg>
+    </bean>
+    
+    
+    <!-- collection injection samples -->
+    <bean id="injectCollection" class="com.apress.prospring.ch4.CollectionInjection">
+        <property name="map">
+            <map>
+                <entry key="someValue">
+                    <value>Hello World!</value>
+                </entry>
+                <entry key="someBean">
+                    <ref local="oracle"/>
+                </entry>
+            </map>
+        </property>
+        <property name="props">
+            <props>
+                <prop key="firstName"> Rob </prop>
+                <prop key="secondName"> Harrop </prop>
+            </props>
+        </property>
+        <property name="set">
+            <set>
+                <value>Hello World!</value>
+                <ref local="oracle"/>
+            </set>
+        </property>
+        <property name="list">
+            <list>
+                <value>Hello World!</value>
+                <ref local="oracle"/>
+            </list>
+        </property>
+    </bean>
+    
+    <!-- naming examples -->
+    <bean id="string1" class="java.lang.String"/>
+    <bean name="string2" class="java.lang.String"/>
+    <bean class="java.lang.String"/>
+    
+    <!-- aliasing examples -->
+    <bean id="name1" name="name2,name3,name4" class="java.lang.String"/>
+    
+    <!-- non-singleton examples -->
+    <bean id="nonSingleton" class="java.lang.String" singleton="false">
+        <constructor-arg>
+            <value>Rob Harrop</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- inheritance examples -->
+    <bean id="inheritParent" class="com.apress.prospring.ch4.inheritance.SimpleBean">
+        <property name="name">
+            <value>Rob Harrop</value>
+        </property>
+        <property name="age">
+            <value>22</value>
+        </property>
+    </bean>
+    
+    <bean id="inheritChild" class="com.apress.prospring.ch4.inheritance.SimpleBean" parent="inheritParent">
+        <property name="age">
+            <value>35</value>
+        </property>
+    </bean>
+</beans>

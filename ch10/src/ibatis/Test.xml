@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.ch10.domain.Test" alias="test"/>
+	
+	<resultMap class="test" id="result">
+		<result property="testId" column="TestId"/>
+		<result property="name" column="Name"/>
+		<result property="runDate" column="RunDate"/>
+	</resultMap>	
+	
+	<select id="getAllTests" resultMap="result">
+		select * from Test
+	</select>
+	
+	<select id="getTestsByNameAndRunDateMap" resultMap="result" parameterClass="map">
+		select * from Test where Name like #name# and RunDate=#runDate#
+	</select>
+
+	<select id="getTestsByNameAndRunDateDO" resultMap="result" parameterClass="test">
+		select * from Test where Name like #name# and RunDate=#runDate#
+	</select>
+	
+	<update id="updateTest" parameterClass="test">
+		update Test set Name=#name#, RunDate=#runDate# where TestId=#testId#
+	</update>
+
+	<update id="updateTestNameDO" parameterClass="test">
+		update Test set Name=#name# where TestId=#testId#
+	</update>
+
+	<update id="updateTestNameMap" parameterClass="map">
+		update Test set Name=#name# where TestId=#testId#
+	</update>
+	
+	<delete id="deleteTest" parameterClass="int">
+		delete from Test where TestId=#value#
+	</delete>
+	
+	<insert id="insertTest" parameterClass="test">
+		<selectKey keyProperty="testId" resultClass="int">
+			select nextval('Test_TestId_Seq')
+		</selectKey>
+		insert into Test (TestId, Name, RunDate) values (#testId#, #name#, #runDate#)
+	</insert>
+	
+</sqlMap>

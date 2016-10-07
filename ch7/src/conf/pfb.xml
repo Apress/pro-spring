@@ -1,0 +1,53 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="myBean1" class="com.apress.prospring.ch7.pfb.MyBean">
+        <property name="dep">
+            <ref local="myDependency1"/>
+        </property>
+    </bean>
+    
+    <bean id="myBean2" class="com.apress.prospring.ch7.pfb.MyBean">
+        <property name="dep">
+            <ref local="myDependency2"/>
+        </property>
+    </bean>
+    
+    <bean id="myDependencyTarget" class="com.apress.prospring.ch7.pfb.MyDependency"/>
+    
+    <bean id="myDependency1" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <ref local="myDependencyTarget"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>advice</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="myDependency2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target">
+            <ref local="myDependencyTarget"/>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>advisor</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="advice" class="com.apress.prospring.ch7.pfb.MyAdvice"/>
+    
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="advice">
+            <ref local="advice"/>
+        </property>
+        <property name="pointcut">
+            <bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+                <property name="pattern">
+                    <value>.*foo.*</value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,44 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="job" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass">
+            <value>com.apress.prospring.ch14.quartz.spring.PersistentJob</value>
+        </property>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="message">
+                    <value>Original Message</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="driverClassName">
+            <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property name="url"><value>jdbc:mysql://localhost:3306/quartz</value></property>
+		<property name="username"><value>root</value></property>
+		<property name="password"><value></value></property>
+    </bean>
+    <bean id="trigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail">
+            <ref local="job"/>
+        </property>
+        <property name="startDelay">
+            <value>1000</value>
+        </property>
+        <property name="repeatInterval">
+            <value>3000</value>
+        </property>
+    </bean>
+    <bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref local="trigger"/>
+            </list>
+        </property>
+        <property name="dataSource">
+            <ref local="dataSource"/>
+        </property>
+    </bean>
+</beans>

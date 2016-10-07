@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     Sep 24, 2004 9:08:58 PM                                                        
+
+     Pro Spring Chapter 12
+     Pro Spring Chapters 17, 18, 19 Sample application
+                   
+     janm                                                                
+     ====================================================================== -->
+<project name="Pro Spring Chapter 17 " default="dist-web">
+    <description>Pro Spring Chapters 17 Sample application</description>
+
+	<property name="dir.business.java.src" value="business-src/java"/>
+	<property name="dir.business.resources.src" value="business-src/resources"/>
+	<property name="dir.business.build" value="build/business"/>
+
+	<property name="dir.data.java.src" value="data-src/java"/>
+	<property name="dir.data.build" value="build/data"/>
+	
+	<property name="dir.domain.java.src" value="domain-src/java"/>
+	<property name="dir.domain.build" value="build/domain"/>
+	
+	<property name="dir.web.java.src" value="web-src/java"/>
+	<property name="dir.web.httpd.src" value="web-src/httpd-web"/>
+	<property name="dir.web.as.src" value="web-src/as-web"/>
+	<property name="dir.web.resources.src" value="web-src/resources"/>
+	<property name="dir.web.build" value="build/web"/>
+	<property name="dir.web.dist" value="dist"/>
+
+	<property name="dir.lib" value="../lib"/>
+
+	<path id="project.classpath">
+		<fileset dir="${dir.lib}" includes="*.jar"/>
+	</path>
+	
+	<target name="dist-web" depends="compile-web">
+		<war warfile="${dir.web.dist}/ch18.war" webxml="${dir.web.as.src}/WEB-INF/web.xml">
+			<classes dir="${dir.business.build}" includes="**/*.class"/>
+			<classes dir="${dir.data.build}" includes="**/*.class"/>
+			<classes dir="${dir.domain.build}" includes="**/*.class"/>
+			<classes dir="${dir.web.build}" includes="**/*.class"/>
+			<classes dir="${dir.web.resources.src}" includes="**/*"/>
+			<webinf dir="${dir.business.resources.src}" includes="**/*"/>
+			<webinf dir="${dir.web.as.src}/WEB-INF" includes="*.xml" excludes="web.xml"/>
+			<lib dir="${dir.lib}" includes="*.jar"/>
+
+			<fileset dir="${dir.web.as.src}">
+				<include name="**/*.jsp"/>
+				<include name="**/*.vm"/>
+				<include name="**/*.xslt"/>
+			</fileset>
+			<fileset dir="${dir.web.httpd.src}">
+				<include name="**/*"/>
+			</fileset>
+		</war>
+	</target>
+	
+	<target name="compile-web" depends="compile-business">
+		<javac destdir="${dir.web.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+			<classpath path="${dir.domain.build}"/>
+			<classpath path="${dir.data.build}"/>
+			<classpath path="${dir.business.build}"/>
+			<src path="${dir.web.java.src}"/>
+		</javac>
+	</target>
+	
+	<target name="compile-business" depends="compile-data">
+		<javac destdir="${dir.business.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+			<classpath path="${dir.domain.build}"/>
+			<classpath path="${dir.data.build}"/>
+			<src path="${dir.business.java.src}"/>
+		</javac>
+	</target>
+	
+	<target name="compile-data" depends="compile-domain">
+		<javac destdir="${dir.data.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+			<classpath path="${dir.domain.build}"/>
+			<src path="${dir.data.java.src}"/>
+		</javac>
+	</target>
+	
+	<target name="compile-domain" depends="init">
+		<javac destdir="${dir.domain.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+			<src path="${dir.domain.java.src}"/>
+		</javac>
+    </target>
+
+	<target name="init">
+		<mkdir dir="${dir.web.build}"/>
+		<mkdir dir="${dir.web.dist}"/>
+		<mkdir dir="${dir.data.build}"/>
+		<mkdir dir="${dir.domain.build}"/>
+		<mkdir dir="${dir.business.build}"/>
+	</target>
+
+</project>
+

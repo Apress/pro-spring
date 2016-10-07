@@ -1,0 +1,9 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+"http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="testBean" class="com.apress.prospring.ch2.HelloWorldMessageProvider">
+        <!--<property name="foo">
+            <value>bar</value>
+        </property>-->
+    </bean>
+</beans>

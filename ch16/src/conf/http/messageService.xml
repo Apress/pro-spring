@@ -1,0 +1,11 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://localhost:8080/remoting/http/messageService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.MessageService</value>
+        </property>
+    </bean>	
+</beans>

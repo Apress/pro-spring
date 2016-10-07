@@ -1,0 +1,23 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="preparator" class="com.apress.prospring.ch15.velocity.VelocityMimeMessagePreparator">
+		<property name="to">
+			<value>robh@cakesolutions.net</value>
+		</property>
+		<property name="from">
+			<value>mail@apress.com</value>
+		</property>
+		<property name="subject">
+			<value>Mail Using Velocity</value>
+		</property>
+		<property name="plainTextTemplatePath">
+			<value>./ch15/src/vm/plainText.vm</value>
+		</property>
+		<property name="htmlTemplatePath">
+			<value>./ch15/src/vm/html.vm</value>
+		</property>
+		<property name="velocityEngine">
+			<bean class="org.springframework.ui.velocity.VelocityEngineFactoryBean"/>
+		</property>
+	</bean>    
+</beans>

@@ -1,0 +1,11 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <bean id="foo" class="com.apress.prospring.ch4.autowiring.Foo"/>
+    <bean id="bar" class="com.apress.prospring.ch4.autowiring.Bar"/>
+    
+    <bean id="targetByName" autowire="byName" class="com.apress.prospring.ch4.autowiring.Target"/>
+    <bean id="targetByType" autowire="byType" class="com.apress.prospring.ch4.autowiring.Target"/>
+    <bean id="targetConstructor" autowire="constructor" class="com.apress.prospring.ch4.autowiring.Target"/>
+    <bean id="targetAutodetect" autowire="autodetect" class="com.apress.prospring.ch4.autowiring.Target"/>
+</beans>

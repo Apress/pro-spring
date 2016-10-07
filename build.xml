@@ -1,0 +1,79 @@
+<project name="pro-spring" default="compile-ch13">
+
+	<property name="dir.build" value="build"/>
+	<property name="dir.dist" value="dist"/>
+	<property name="dir.lib" value="lib"/>
+	
+	<!-- CH13 Properties -->
+	<property name="dir.ch13.src" value="ch13/src"/>
+	<property name="dir.ch13.src.java" value="ch13/src/java"/>
+	<property name="dir.ch13.src.web" value="ch13/src/web"/>
+	<property name="dir.ch13.src.ejb" value="ch13/src/ejb"/>
+	<property name="dir.ch13.src.ear" value="ch13/src/ear"/>
+	<property name="jboss.dir" value="d:/opt/jboss-3.2.5"/>
+	
+	<path id="project.classpath">
+		<fileset dir="${dir.lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="clean">
+		<delete dir="${dir.build}"/>
+		<delete dir="${dir.dist}"/>
+		<mkdir dir="${dir.build}"/>
+		<mkdir dir="${dir.dist}"/>
+	</target>
+	
+	<target name="compile-ch13" depends="clean">
+		<javac srcdir="${dir.ch13.src.java}" 
+			   destdir="${dir.build}" 
+			   classpathref="project.classpath"/>
+	</target>
+	
+	<target name="war-ch13" depends="compile-ch13">
+		<war destfile="${dir.dist}/ch13.war" webxml="${dir.ch13.src.web}/WEB-INF/web.xml">
+			<classes dir="${dir.build}">
+				<include name="**/*.class"/>
+			</classes>
+			
+			<lib dir="${dir.lib}">
+				<include name="*.jar"/>
+				<exclude name="servlet-api.jar"/>
+				<exclude name="ejb.jar"/>
+			</lib>
+			
+			<webinf dir="${dir.ch13.src.web}/WEB-INF">
+				<include name="*.xml"/>
+				<exclude name="web.xml"/>
+			</webinf>
+		</war>
+	</target>
+	
+	<target name="ejb-jar-ch13" depends="compile-ch13">
+		<jar destfile="${dir.dist}/ch13-ejb.jar">
+			<fileset dir="${dir.ch13.src.ejb}">
+				<include name="**/*.xml"/>
+			</fileset>
+			<fileset dir="${dir.build}">
+				<include name="com/apress/prospring/ch13/ejb/*.class"/>
+			</fileset>
+			<fileset dir="${dir.lib}">
+				<include name="*.jar"/>
+				<exclude name="servlet-api.jar"/>
+				<exclude name="ejb.jar"/>
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="ear-ch13" depends="ejb-jar-ch13, war-ch13">
+			<ear destfile="${dir.dist}/ch13.ear" appxml="${dir.ch13.src.ear}/META-INF/application.xml">
+				<fileset dir="${dir.dist}" includes="ch13-ejb.jar"/>
+				<fileset dir="${dir.dist}" includes="ch13.war"/>
+			</ear>
+		</target>
+	
+	<target name="deploy-ch13" depends="ear-ch13">
+		<copy file="${dir.dist}/ch13.ear" todir="${jboss.dir}/server/default/deploy"/>
+	</target>
+</project>

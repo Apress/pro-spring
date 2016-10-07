@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.domain.Entry" alias="entry"/>
+	
+	<resultMap class="entry" id="result">
+		<result property="entryId" column="EntryId"/>
+		<result property="subject" column="Subject"/>
+		<result property="body" column="Body"/>
+		<result property="postDate" column="PostDate" javaType="java.util.Date"/>
+		<result property="attachments" column="entryId" select="getAttachmentByEntry"/>
+		<result property="comments" column="entryId" select="getCommentByEntry"/>
+	</resultMap>
+	
+	<select id="getAllEntries" resultMap="result">
+		select * from Entries order by PostDate desc
+	</select>
+	
+	<insert id="insertEntry" parameterClass="entry">
+		insert into Entries (Subject, Body, PostDate) values (#subject#, #body#, #postDate#)
+		<selectKey keyProperty="entryId" resultClass="int">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<update id="updateEntry" parameterClass="entry">
+		update Entries set Subject=#subject#, Body=#body#, PostDate=#postDate# where EntryId=#entryId#
+	</update>
+
+</sqlMap>

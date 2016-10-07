@@ -1,0 +1,10 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="methodReplacer" class="com.apress.prospring.ch5.mi.FormatMessageReplacer"/>
+    <bean id="replacementTarget" class="com.apress.prospring.ch5.mi.ReplacementTarget">
+        <replaced-method name="formatMessage" replacer="methodReplacer">
+            <arg-type>String</arg-type>
+        </replaced-method>
+    </bean>
+    <bean id="standardTarget" class="com.apress.prospring.ch5.mi.ReplacementTarget"/>
+</beans>

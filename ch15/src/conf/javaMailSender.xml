@@ -1,0 +1,8 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>localhost</value>
+		</property>
+	</bean>    
+</beans>

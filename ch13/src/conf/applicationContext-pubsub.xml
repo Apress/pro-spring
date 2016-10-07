@@ -1,0 +1,10 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+       
+    <bean id="destination" class="org.codehaus.activemq.message.ActiveMQTopic">
+        <!-- Set the Destination Name -->
+        <constructor-arg index="0">
+            <value>FantasyFootballTopic</value>
+        </constructor-arg>
+    </bean>
+</beans>

@@ -1,0 +1,27 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageService" class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://localhost:8080/remoting/http/messageServiceSecure</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.MessageService</value>
+        </property>
+		<property  name="httpInvokerRequestExecutor">
+			<ref local="requestExecutor"/>
+		</property>
+    </bean>	
+	
+	<bean id="requestExecutor" class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">
+		<property name="httpClient">
+			<bean class="com.apress.prospring.ch16.remoting.http.HttpClientFactoryBean">
+				<property name="username">
+					<value>tomcat</value>
+				</property>	
+				<property name="password">
+					<value>tomcat</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>

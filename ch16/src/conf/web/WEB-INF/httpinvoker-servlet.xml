@@ -1,0 +1,32 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+	
+	<bean name="/helloWorld" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="helloWorldService"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.apress.prospring.ch16.remoting.HelloWorld</value>
+		</property>
+	</bean>
+	
+	<bean name="/messageService" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="messageService"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.apress.prospring.ch16.remoting.MessageService</value>
+		</property>
+	</bean>
+	
+	<bean name="/messageServiceSecure" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service">
+			<ref bean="messageService"/>
+		</property>
+		<property name="serviceInterface">
+			<value>com.apress.prospring.ch16.remoting.MessageService</value>
+		</property>
+	</bean>
+	
+</beans>

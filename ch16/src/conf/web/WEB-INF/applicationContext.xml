@@ -1,0 +1,5 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="helloWorldService" class="com.apress.prospring.ch16.remoting.SimpleHelloWorld"/>
+	<bean id="messageService" class="com.apress.prospring.ch16.remoting.http.SimpleMessageService"/>
+</beans>

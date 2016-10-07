@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>http://localhost:8080/remoting/caucho/messageServiceSecure</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.MessageService</value>
+        </property>
+        <property name="username">
+            <value>tomcat</value>
+        </property>
+        <property name="password">
+            <value>tomcat</value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
+
+	<!--
+    <bean id="blogManager" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager">
+            <ref bean="transactionManager"/>
+        </property>
+        <property name="proxyTargetClass">
+            <value>true</value>
+        </property>
+        <property name="target">
+            <ref local="blogManagerTarget"/>
+        </property>
+        <property name="preInterceptors">
+            <list>
+                <ref local="obscenityFilterAdvisor"/>
+            </list>
+        </property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="saveComment*">PROPAGATION_REQUIRED</prop>
+                <prop key="saveEntry*">PROPAGATION_REQUIRED</prop>
+            </props>
+        </property>
+    </bean> -->
+    <bean id="blogManager" class="com.apress.prospring.business.DefaultBlogManager">
+        <property name="entryDao">
+            <ref bean="entryDao"/>
+        </property>
+        <property name="userDao">
+            <ref bean="userDao"/>
+        </property>
+        <property name="commentDao">
+            <ref bean="commentDao"/>
+        </property>
+        <property name="auditService">
+            <ref bean="auditService"/>
+        </property>
+		<property name="attachmentDao">
+			<ref bean="attachmentDao"/>
+		</property>
+    </bean>
+    
+    <bean id="obscenityFilterAdvisor" class="com.apress.prospring.business.aop.ObscenityFilterAdvice">
+        <property name="obscenityFilter">
+            <bean class="com.apress.prospring.business.ListBasedObscenityFilter">
+                <property name="obscenities">
+                    <list>
+                        <value>crap</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <bean id="auditService" class="com.apress.prospring.business.DefaultAuditService">
+        <property name="auditDao">
+            <ref bean="auditDao"/>
+        </property>
+    </bean>
+</beans>

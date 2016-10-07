@@ -1,0 +1,13 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="injectBean" class="java.lang.String">
+           <constructor-arg>
+               <value>Bean In Parent</value>
+           </constructor-arg>
+    </bean>
+    <bean id="injectBeanParent" class="java.lang.String">
+           <constructor-arg>
+               <value>Bean In Parent</value>
+           </constructor-arg>
+    </bean>
+</beans>    

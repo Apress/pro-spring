@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="helloWorldService" class="org.springframework.remoting.rmi.JndiRmiProxyFactoryBean">
+        <property name="jndiName">
+            <value>HelloWorld</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.HelloWorld</value>
+        </property>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.factory.initial">com.sun.jndi.cosnaming.CNCtxFactory</prop>
+                <prop key="java.naming.provider.url">iiop://localhost:1050</prop>
+            </props>
+        </property>
+    </bean>
+</beans>

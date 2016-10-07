@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="*"><ref local="testController"/></entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="testController" class="com.apress.prospring.ch12.web.TestController">
+		<property name="accountManager"><ref bean="accountManager"/></property>
+	</bean>
+	
+</beans>

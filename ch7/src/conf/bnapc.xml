@@ -1,0 +1,22 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <bean id="proxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+			<list>
+				<value>foo*</value>
+				<value>barBean</value>
+			</list>
+        </property>    
+        <property name="interceptorNames">
+            <list>
+                <value>advice</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="fooBean" class="com.apress.prospring.ch7.autoproxying.AutoBean"/>
+    <bean id="barBean" class="com.apress.prospring.ch7.autoproxying.AutoBean"/>
+    
+    <bean id="advice" class="com.apress.prospring.ch7.cflow.SimpleBeforeAdvice"/>
+</beans>

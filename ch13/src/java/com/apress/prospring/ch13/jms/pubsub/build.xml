@@ -1,0 +1,22 @@
+<project name="jmspubsub" default="run" basedir="../../../../../../../../../">
+
+	<path id="classpath">
+		<pathelement location="${basedir}/bin"/>
+		<fileset dir="${basedir}/lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+		
+	<target name="run">
+		<!--<java classname="com.apress.prospring.ch13.jms.pubsub.Consumer" 
+			  classpathref="classpath" fork="true" spawn="true">
+			<arg value="Consumer 1"/>
+		</java>
+
+		<java classname="com.apress.prospring.ch13.jms.pubsub.Consumer" 
+			  classpathref="classpath" fork="true">
+			<arg value="Consumer 1"/>
+		</java>-->
+	</target>
+	
+</project>

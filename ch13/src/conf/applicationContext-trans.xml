@@ -1,0 +1,29 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+       
+    <bean id="senderTarget" class="com.apress.prospring.ch13.jms.trans.Sender">
+        <property name="jmsTemplate">
+               <ref bean="jmsTemplate"/>
+        </property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory">
+            <ref bean="connectionFactory"/>
+        </property>
+    </bean>
+    
+    <bean id="sender" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+         <property name="transactionManager">
+             <ref local="transactionManager"/>
+         </property>
+         <property name="target">
+             <ref local="senderTarget"/>
+         </property>
+         <property name="transactionAttributes">
+             <props>
+                 <prop key="send*">PROPAGATION_REQUIRED</prop>
+             </props>
+          </property>
+    </bean>
+</beans>

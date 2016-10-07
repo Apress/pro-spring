@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+
+<!--
+	<local-tx-datasource>
+		<jndi-name>SpringDS_psql</jndi-name>
+
+		<connection-url>jdbc:postgresql://localhost/prospring</connection-url>
+		<driver-class>org.postgresql.Driver</driver-class>
+		<user-name>janm</user-name>
+		<password>Gen0me64</password>
+	</local-tx-datasource>
+-->	
+	<local-tx-datasource>
+		<jndi-name>SpringDS</jndi-name>
+
+		<connection-url>jdbc:oracle:thin:@localhost:1521:orcl</connection-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<user-name>SCOTT</user-name>
+		<password>Gen0me64</password>
+	</local-tx-datasource>
+
+</datasources>

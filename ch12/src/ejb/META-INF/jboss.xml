@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<jboss>
+	<enterprise-beans>
+		<message-driven>
+			<ejb-name>SpringMDB</ejb-name>
+			<destination-jndi-name>queue/springQueue</destination-jndi-name>
+			<resource-ref>
+				<res-ref-name>jms/SpringMessages</res-ref-name>
+				<jndi-name>XAConnectionFactory</jndi-name>
+			</resource-ref>
+		</message-driven>
+	</enterprise-beans>
+</jboss>

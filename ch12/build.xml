@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     Aug 24, 2004 9:08:58 PM                                                        
+
+     Pro Spring Chapter 12
+     iBATIS sample application
+                   
+     janm                                                                
+     ====================================================================== -->
+<project name="Pro Spring Chapter 12" default="run">
+    <description>iBATIS sample application</description>
+    	
+    <property name="dir.main.java.src" value="src/main/java"/>
+	<property name="dir.main.ibatis.src" value="src/main/ibatis"/>
+  	<property name="dir.conf.src" value="src/conf"/>
+	<property name="dir.web.src" value="src/web"/>
+	<property name="dir.ear.src" value="src/ear"/>
+	<property name="dir.ejb.src" value="src/ejb"/>
+	<property name="dir.lib" value="../lib"/>
+	
+	<property name="dir.main.build" value="build/main"/>
+	<property name="dir.ejb.dist" value="dist/ejb"/>
+	<property name="dir.ear.dist" value="dist/ear"/>
+	<property name="dir.web.dist" value="dist/web"/>
+	<property name="dir.build.commons-attributes" value="build/commons-attributes"/>
+		
+	<path id="project.classpath">
+		<fileset dir="${dir.lib}" includes="*.jar"/>
+	</path>
+	
+	<taskdef resource="org/apache/commons/attributes/anttasks.properties"/>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="run" depends="compile" description="--> Transactions sample application">
+		<copy todir="${dir.main.build}">
+			<fileset dir="${dir.conf.src}" includes="**/*"/>
+			<fileset dir="${dir.main.ibatis.src}" includes="**/*"/>
+		</copy>
+		<java classpathref="project.classpath" classpath="${dir.main.build}" classname="com.apress.prospring.ch12.Main">
+			<classpath path="${dir.build.commons-attributes}"/>
+		</java>
+    </target>
+	
+	<target name="dist-web" depends="compile">
+		<war warfile="${dir.web.dist}/spring-ch12-web.war" webxml="${dir.web.src}/WEB-INF/web.xml">
+			<classes dir="${dir.main.build}" includes="**/*.class"/>
+			<classes dir="${dir.main.ibatis.src}" includes="*.xml"/>
+			<webinf dir="${dir.conf.src}" includes="**/*"/>
+			<webinf dir="${dir.web.src}/WEB-INF" includes="*.xml" excludes="web.xml"/> 
+			<lib dir="${dir.lib}" includes="*.jar"/>
+		</war>
+	</target>
+	
+	<target name="dist-ejb" depends="compile">
+		<jar jarfile="${dir.ejb.dist}/spring-ch12-ejb.jar">
+			<fileset dir="${dir.main.build}" includes="**/*.class"/>
+			<fileset dir="${dir.lib}" includes="*.jar"/>
+			<fileset dir="${dir.ejb.src}" includes="**/*"/>
+		</jar>		
+	</target>
+	
+	<target name="dist-ear" depends="dist-ejb, dist-web">
+		<ear destfile="${dir.ear.dist}/spring-ch12.ear" appxml="${dir.ear.src}/META-INF/application.xml">
+			<fileset dir="${dir.ejb.dist}" includes="*.jar"/>
+			<fileset dir="${dir.web.dist}" includes="*.war"/>
+		</ear>
+	</target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="compile" depends="init, compile-attributes">
+		<javac destdir="${dir.main.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+			<src path="${dir.build.commons-attributes}"/>
+			<src path="${dir.main.java.src}"/>
+		</javac>
+    </target>
+
+	<target name="compile-attributes" >
+	    <attribute-compiler destdir="${dir.build.commons-attributes}">
+	        <fileset dir="${dir.main.java.src}" includes="**/*.java"/>
+	    </attribute-compiler>
+	</target> 	
+	
+	<target name="init">
+		<mkdir dir="${dir.main.build}"/>
+		<mkdir dir="${dir.ejb.dist}"/>
+		<mkdir dir="${dir.ear.dist}"/>
+		<mkdir dir="${dir.web.dist}"/>
+	</target>
+
+</project>
+

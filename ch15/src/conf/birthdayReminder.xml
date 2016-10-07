@@ -1,0 +1,50 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="mum" class="com.apress.prospring.ch14.timer.bday.BirthdayScheduledTask">
+        <property name="date">
+            <value>2004-11-29</value>
+        </property>
+        <property name="fixedRate">
+            <value>true</value>
+        </property>
+        <property name="timerTask">
+            <bean class="com.apress.prospring.ch15.birthday.ReminderTask">
+                <property name="who">
+                    <value>Mum</value>
+                </property>
+                <property name="mailSender">
+                    <ref local="sender"/>
+                </property>
+				<property name="mailMessage">
+					<ref local="mailMessage"/>
+				</property>
+            </bean>
+        </property>
+    </bean>
+
+	<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>localhost</value>
+		</property>
+	</bean>    
+	
+	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from">
+			<value>reminders@apress.com</value>
+		</property>
+		<property name="to">
+			<value>robh@cakesolutions.net</value>
+		</property>
+		<property name="subject">
+			<value>Birthday Reminder!!</value>
+		</property>
+	</bean>
+	
+    <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref local="mum"/>
+            </list>
+        </property>
+    </bean>
+</beans>

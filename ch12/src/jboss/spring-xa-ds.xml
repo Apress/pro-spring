@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<datasources>
+	<xa-datasource>
+		<jndi-name>XASpringDS</jndi-name>
+		<track-connection-by-tx/>
+		<isSameRM-override-value>false</isSameRM-override-value>
+		<xa-datasource-class>oracle.jdbc.xa.client.OracleXADataSource</xa-datasource-class>
+		<xa-datasource-property name="URL">jdbc:oracle:oci8:@orcl</xa-datasource-property>
+		<xa-datasource-property name="User">SCOTT</xa-datasource-property>
+		<xa-datasource-property name="Password">Gen0me64</xa-datasource-property>
+		<exception-sorter-class-name>org.jboss.resource.adapter.jdbc.vendor.OracleExceptionSorter</exception-sorter-class-name>
+		<no-tx-separate-pools/>
+	</xa-datasource>
+	<mbean 
+		code="org.jboss.resource.adapter.jdbc.xa.oracle.OracleXAExceptionFormatter" 
+		name="jboss.jca:service=OracleXAExceptionFormatter">
+		<depends optional-attribute-name="TransactionManagerService">
+			jboss:service=TransactionManager</depends>
+	</mbean>
+</datasources>

@@ -1,0 +1,23 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="helloWorldService" class="com.apress.prospring.ch16.remoting.SimpleHelloWorld"/>
+    
+    <bean id="serviceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">
+        <property name="serviceName">
+            <value>HelloWorld</value>
+        </property>
+        <property name="service">
+            <ref local="helloWorldService"/>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.HelloWorld</value>
+        </property>
+        <property name="registryPort">
+            <value>9000</value>
+        </property>
+        <property name="servicePort">
+            <value>9001</value>
+        </property>
+    </bean>
+    
+</beans>

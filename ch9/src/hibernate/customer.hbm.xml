@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping auto-import="true">
+
+	<class name="com.apress.prospring.ch9.domain.Customer" table="Customers">
+		<id name="customerId" column="CustomerId" type="int" unsaved-value="0">
+			<generator class="sequence">
+				<param name="sequence">Customers_CustomerId_Seq</param>
+			</generator>
+		</id>
+
+		<property name="firstName" column="FirstName"/>
+		<property name="lastName" column="LastName"/>
+		<set name="addresses" inverse="true" cascade="save-update">
+			<key column="Customer"/>
+			<one-to-many class="com.apress.prospring.ch9.domain.CustomerAddress"/>
+		</set>
+		<set name="permissions" inverse="true" table="CustomerPermissions" cascade="save-update">
+			<key column="Customer"/>
+			<many-to-many class="com.apress.prospring.ch9.domain.Permission" column="Permission" outer-join="true"/>
+		</set>
+	</class>
+	
+	<class name="com.apress.prospring.ch9.domain.CustomerAddress" table="CustomerAddresses">
+		<id name="customerAddressId" column="CustomerAddressId" type="int" unsaved-value="0">
+			<generator class="sequence">
+				<param name="sequence">CustomerAddresses_CustomerAddressId_Seq</param>
+			</generator>
+		</id>
+		<property name="customer" column="Customer"/>
+		<property name="line1" column="Line1"/>
+		<property name="line2" column="Line2"/>
+		<property name="city" column="City"/>
+		<property name="postCode" column="PostCode"/>
+	</class>
+	
+	<class name="com.apress.prospring.ch9.domain.Permission" table="Permissions">
+		<id name="permissionId" column="PermissionId" type="int">
+			<generator class="sequence"/>
+		</id>
+		<property name="name" column="Name"/>
+	</class>
+	
+</hibernate-mapping>

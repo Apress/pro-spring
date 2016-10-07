@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="shaDigest" class="com.apress.prospring.ch5.factory.MessageDigestFactoryBean">
+        <property name="algorithmName">
+            <value>SHA1</value>
+        </property>
+    </bean>
+    <bean id="defaultDigest" class="com.apress.prospring.ch5.factory.MessageDigestFactoryBean"/>
+    <bean id="digester" class="com.apress.prospring.ch5.factory.MessageDigester">
+        <property name="digest1">
+            <ref local="shaDigest"/>
+        </property>
+        <property name="digest2">
+            <ref local="defaultDigest"/>
+        </property>
+    </bean>
+</beans>

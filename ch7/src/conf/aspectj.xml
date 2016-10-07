@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans> 
+  <bean id="aspect" class="com.apress.prospring.ch7.aspectj.MessageWrapper" factory-method="aspectOf">
+	<property name="prefix">
+		<value>Ha Ha!</value>
+	</property>
+  	<property name="suffix">
+		<value>Ho Ho!</value>
+	</property>
+  </bean>
+</beans>

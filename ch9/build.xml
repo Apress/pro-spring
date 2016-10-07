@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!-- ====================================================================== 
+     Aug 24, 2004 9:08:58 PM                                                        
+
+     Pro Spring Chapter 9
+     Hibernate sample application
+                   
+     janm                                                                
+     ====================================================================== -->
+<project name="Pro Spring Chapter 9" default="run">
+    <description>Hibernate sample application</description>
+    	
+    <property name="dir.java.src" value="src/java"/>
+  	<property name="dir.conf.src" value="src/conf"/>
+	<property name="dir.hibernate.src" value="src/hibernate"/>
+	<property name="dir.lib" value="../lib"/>
+	
+	<property name="dir.build" value="build"/>
+		
+	<path id="project.classpath">
+		<fileset dir="${dir.lib}" includes="*.jar"/>
+	</path>
+	
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="run" depends="compile" description="--> Hibernate sample application">
+		<copy todir="${dir.build}">
+			<fileset dir="${dir.conf.src}" includes="**/*"/>
+			<fileset dir="${dir.hibernate.src}" includes="**/*"/>
+		</copy>
+		<java classpathref="project.classpath" classpath="${dir.build}" classname="com.apress.prospring.ch9.Main">
+			
+		</java>
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="compile" depends="init">
+		<javac srcdir="${dir.java.src}" destdir="${dir.build}" debug="on" debuglevel="lines,vars,source">
+			<classpath refid="project.classpath"/>
+		</javac>
+    </target>
+	
+	<target name="init">
+		<mkdir dir="${dir.build}"/>
+	</target>
+
+</project>

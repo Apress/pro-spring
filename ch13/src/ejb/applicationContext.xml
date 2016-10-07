@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<bean id="echoService" class="com.apress.prospring.ch13.ejb.EchoServiceImpl"/>
+	<bean id="counterService" class="com.apress.prospring.ch13.ejb.CounterServiceImpl"/>
+	
+</beans>

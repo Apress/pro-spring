@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.ch12.domain.History" alias="history"/>
+	
+	<resultMap class="history" id="result">
+		<result property="historyId" column="HistoryId"/>
+		<result property="account" column="Account"/>
+		<result property="operation" column="Operation"/>
+		<result property="amount" column="Amount"/>
+		<result property="transactionDate" column="TransactionDate"/>
+		<result property="targetAccount" column="TargetAccount"/>
+	</resultMap>
+	
+	<insert id="insertHistory" parameterClass="history">
+		<selectKey keyProperty="historyId" resultClass="int">
+			select nextval('History_HistoryId_Seq')
+		</selectKey>
+		insert into History (HistoryId, Account, Operation, Amount, TransactionDate, TargetAccount) 
+			values (#historyId#, #account#, #operation#, #amount#, #transactionDate#, #targetAccount#)
+	</insert>
+	
+	<select id="getHistoryById" parameterClass="int" resultMap="result">
+		select * from History where HistoryId=#value#
+	</select>
+	
+	<select id="getHistoryByAccount" parameterClass="int" resultMap="result">
+		select * from History where Account=#value#
+	</select>
+</sqlMap>

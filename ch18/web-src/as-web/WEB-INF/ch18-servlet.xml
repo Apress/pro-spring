@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath"><value>WEB-INF/views/</value></property>
+	</bean>
+
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize"> <value>100000</value> </property> 
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles-layout.xml</value>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="multipartResolver2"
+		class="org.springframework.web.multipart.cos.CosMultipartResolver">
+		<property name="maxUploadSize"><value>100000</value></property>
+	</bean>	
+	
+	<bean id="themeResolver" class="org.springframework.web.servlet.theme.FixedThemeResolver">
+		<property name="defaultThemeName"><value>cool</value></property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename"><value>views</value></property>	
+	</bean>
+	
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>	
+	
+	<bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/index.html">indexController</prop>
+				<prop key="/status.html">statusController</prop>
+				<prop key="/product/index.html">productController</prop>
+				<prop key="/product/view.html">productController</prop>
+				<prop key="/product/edit.html">productFormController</prop>
+				<prop key="/product/image.html">productImageFormController</prop>
+				
+				<prop key="/tile/*.tile">tileController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- ====================================== Controllers ============================================== -->
+	
+	<!-- Index -->
+	<bean id="indexController" class="com.apress.prospring.ch18.web.IndexController"/>
+
+	<!-- Status -->
+	<bean id="statusController" class="com.apress.prospring.ch18.web.StatusController"/>
+	
+	<!-- Tile -->
+	<bean id="tileController" class="com.apress.prospring.ch18.web.tiles.TileController">
+		<property name="methodNameResolver"><ref local="tileMethodNameResolver"/></property>
+		<property name="menu">
+			<map>
+				<entry key="Apress"><value>http://www.apress.com</value></entry>
+				<entry key="Spring"><value>http://www.springframework.org</value></entry>
+				<entry key="Cake Solutions"><value>http://www.cakesolutions.net</value></entry>
+			</map>
+		</property>
+	</bean>
+	<bean id="tileMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/tile/status.tile">handleStatus</prop>
+				<prop key="/tile/menu.tile">handleMenu</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Product -->
+	<bean id="productController" class="com.apress.prospring.ch18.web.product.ProductController">
+		<property name="methodNameResolver"><ref local="productMethodNameResolver"/></property>
+	</bean>
+	
+	<bean id="productFormController" class="com.apress.prospring.ch18.web.product.ProductFormController">
+		<property name="validator"><ref bean="productValidator"/></property>	
+	</bean>
+	
+	<bean id="productImageFormController" class="com.apress.prospring.ch18.web.product.ProductImageFormController"/>
+	
+	<bean id="productMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/product/view.html">view</prop>
+				<prop key="/product/index.html">index</prop>
+				<prop key="/product/v*.html">view</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

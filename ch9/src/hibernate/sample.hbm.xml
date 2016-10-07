@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping auto-import="true">
+
+	<class name="com.apress.prospring.ch9.domain.Test" table="Test">
+		<id name="testId" column="TestId" type="int" unsaved-value="0">
+			<generator class="sequence">
+				<param name="sequence">Test_TestId_Seq</param>
+			</generator>
+		</id>
+		<version name="version" column="Version" unsaved-value="negative"/>
+		<property name="name" column="Name"/>
+		<property name="runDate" column="RunDate"/>
+	</class>
+	
+</hibernate-mapping>

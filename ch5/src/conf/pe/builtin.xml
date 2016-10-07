@@ -1,0 +1,29 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="builtInSample" class="com.apress.prospring.ch5.pe.PropertyEditorBean">
+        <property name="class">
+            <value>java.lang.String</value>
+        </property>
+        <property name="file">
+            <value>d:/tmp/test.txt</value>
+        </property>
+        <property name="locale">
+            <value> en-GB </value>
+        </property>
+        <property name="url">
+            <value>http://www.springframework.org</value>
+        </property>
+        <property name="properties">
+            <value> 
+                name=foo 
+                age=19 
+            </value>
+        </property>
+        <property name="strings">
+            <value>rob,jan,rod,jurgen,alef</value>
+        </property>
+        <property name="bytes">
+            <value>Hello World</value>
+        </property>
+    </bean>
+</beans>

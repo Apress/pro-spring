@@ -1,0 +1,8 @@
+<html>
+	<head></head>
+	<body>
+	<h1>This is the HTML mail</h1>
+	<h2>Today's message is: <em>$msg</em></h2>
+	<img src="http://www.apress.com/img/v2/hdr_logo.gif">
+	</body>
+</html>

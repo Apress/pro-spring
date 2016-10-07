@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>	
+    <bean id="userDao" class="com.apress.prospring.data.jdbc.JdbcMysqlUserDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+	
+    <bean id="entryDao" class="com.apress.prospring.data.jdbc.JdbcMysqlEntryDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="commentDao">
+            <ref bean="commentDao"/>
+        </property>
+        <property name="attachmentDao">
+            <ref bean="attachmentDao"/>
+        </property>
+    </bean>
+    <bean id="commentDao" class="com.apress.prospring.data.jdbc.JdbcMysqlCommentDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <bean id="auditDao" class="com.apress.prospring.data.jdbc.JdbcMysqlAuditDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+    <bean id="attachmentDao" class="com.apress.prospring.data.jdbc.JdbcMysqlAttachmentDao">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.domain.User" alias="user"/>
+	
+	<resultMap class="user" id="result">
+		<result property="userId" column="UserId"/>
+		<result property="username" column="Username"/>
+		<result property="password" column="Password"/>
+		<result property="email" column="Email"/>
+		<result property="type" column="Type"/>
+	</resultMap>
+	
+	<select id="getUserByUsernameAndPassword" parameterClass="map" resultMap="result">
+		select
+			*
+		from
+			Users
+		where
+			Username=#username# and Password=#password#
+	</select>
+	
+	<select id="getAllUsers" resultMap="result">
+		select * from Users
+	</select>
+	
+	<update id="updateUser" parameterClass="user">
+		update Users set Username=#username#, Password=#password#, Email=#email#, Type=#type# where UserId=#userId#
+	</update>
+
+	<insert id="insertUser" parameterClass="user">
+		insert into Users (Username, Password, Email, Type) values (#username#, #password#, #email#, #type#)
+	</insert>
+	
+	<delete id="deleteUser" parameterClass="int">
+		delete from Users where UserId=#value#
+	</delete>
+</sqlMap>

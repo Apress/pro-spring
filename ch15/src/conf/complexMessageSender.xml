@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="messageSender" class="com.apress.prospring.ch15.mime.ComplexMessageSender">
+		<property name="javaMailSender">
+			<ref bean="sender"/>
+		</property>
+		<property name="to">
+			<value>robh@cakesolutions.net</value>
+		</property>
+		<property name="from">
+			<value>mail@apress.com</value>
+		</property>
+		<property name="subject">
+			<value>Complex Message Structure</value>
+		</property>
+	</bean>    
+</beans>

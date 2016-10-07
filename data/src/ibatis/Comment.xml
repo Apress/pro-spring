@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.domain.Comment" alias="comment"/>
+	
+	<resultMap class="comment" id="result">
+		<result property="commentId" column="CommentId"/>
+		<result property="subject" column="Subject"/>
+		<result property="body" column="Body"/>
+		<result property="postDate" column="PostDate"/>
+		<result property="replyTo" column="ReplyTo"/>
+		<result property="postedBy.userId" column="PostedByUserId"/>
+		<result property="postedBy.username" column="PostedByUsername"/>
+		<result property="postedBy.password" column="PostedByPassword"/>
+		<result property="postedBy.email" column="PostedByEmail"/>
+		<result property="postedBy.type" column="PostedByType"/>
+		<result property="attachments" column="commentId" select="getAttachmentByComment"/>	
+	</resultMap>
+
+	<select id="getCommentByEntry" parameterClass="int" resultMap="result">
+		select
+			c.*,
+			pb.UserId as PostedByUserId,
+			pb.Username as PostedByUsername,
+			pb.Password as PostedByPassword,
+			pb.Email as PostedByEmail,
+			pb.Type as PostedByType
+		from
+			Comments c inner join Users pb on pb.UserId = c.PostedBy
+		where
+			c.Entry = #value#
+	</select>
+	
+	<select id="getCommentById" parameterClass="int" resultMap="result">
+		select
+			c.*,
+			pb.UserId as PostedByUserId,
+			pb.Username as PostedByUsername,
+			pb.Password as PostedByPassword,
+			pb.Email as PostedByEmail,
+			pb.Type as PostedByType
+		from
+			Comments c inner join Users pb on pb.UserId = c.PostedBy
+		where
+			c.CommentId = #value#
+	</select>
+	
+	<insert id="insertComment" parameterClass="comment">
+		insert into Comments (Subject, Body, PostDate, Entry, ReplyTo, PostedBy) values (#subject#, #body#, #postDate#, #entry#, #replyTo#, #postedBy.userId#)
+		<selectKey keyProperty="commentId" resultClass="int">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<update id="updateComment" parameterClass="comment">
+		update Comments set Subject=#subject#, PostDate=#postDate#, Entry=#entry#, ReplyTo=#replyTo#, PostedBy=#postedBy.userId# where CommentId=#commentId#
+	</update>
+
+	<delete id="deleteComment" parameterClass="int">
+		delete from Comments where CommentId = #value#
+	</delete>
+
+</sqlMap>

@@ -1,0 +1,41 @@
+<project name="pro-spring-ch16" default="war" basedir="../../">
+
+	<property name="dir.build" value="${basedir}\bin" />
+	<property name="dir.lib" value="${basedir}\lib" />
+	<property name="dir.src.java" value="${basedir}\ch16\src\java" />
+	<property name="dir.src.web" value="${basedir}\ch16\src\conf\web" />
+	<property name="dir.dist" value="${basedir}\ch16\src\dist" />
+
+	<path id="project.classpath">
+		<fileset dir="${dir.lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+		
+	<target name="prepare">
+		<delete dir="${dir.build}" />
+		<delete dir="${dir.dist}" />
+		<mkdir dir="${dir.build}" />
+		<mkdir dir="${dir.dist}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac classpathref="project.classpath" srcdir="${dir.src.java}" destdir="${dir.build}" />
+	</target>
+
+	<target name="war" depends="compile">
+		<war destfile="${dir.dist}\remoting.war" webxml="${dir.src.web}\WEB-INF\web.xml">
+			<lib dir="${dir.lib}">
+				<include name="*.jar"/>
+				<exclude name="servlet-api.jar"/>
+				<exclude name="geronimo-spec-j2ee-1.0-M1.jar"/>
+			</lib>
+			<classes dir="${dir.build}">
+				<include name="**/*.class"/>
+			</classes>
+			<webinf dir="${dir.src.web}/WEB-INF">
+				<exclude name="web.xml"/>
+			</webinf>
+		</war>
+	</target>
+</project>

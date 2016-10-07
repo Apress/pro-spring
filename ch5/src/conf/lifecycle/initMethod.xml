@@ -1,0 +1,21 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="simpleBean1" class="com.apress.prospring.ch5.lifecycle.SimpleBean" init-method="init">
+        <property name="name">
+            <value>Rob Harrop</value>
+        </property>
+        <property name="age">
+            <value>100</value>
+        </property>
+    </bean>
+    <bean id="simpleBean2" class="com.apress.prospring.ch5.lifecycle.SimpleBean" init-method="init">
+        <property name="age">
+            <value>100</value>
+        </property>
+    </bean>
+    <bean id="simpleBean3" class="com.apress.prospring.ch5.lifecycle.SimpleBean" init-method="init">
+        <property name="name">
+            <value>Rob Harrop</value>
+        </property>
+    </bean>
+</beans>

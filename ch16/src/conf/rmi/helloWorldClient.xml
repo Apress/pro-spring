@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="helloWorldService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl">
+            <value>rmi://localhost:9000/HelloWorld</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.HelloWorld</value>
+        </property>
+    </bean>
+    
+    <bean id="helloWorldClient" class="com.apress.prospring.ch16.remoting.rmi.HelloWorldClient">
+        <property name="helloWorldService">
+            <ref local="helloWorldService"/>
+        </property>
+    </bean>
+</beans>

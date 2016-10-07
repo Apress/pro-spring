@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	
+	<bean id="autoproxy" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+	
+	<bean id="transactionAttributeSource" 
+		class="org.springframework.transaction.interceptor.AttributesTransactionAttributeSource"
+		autowire="constructor"/>
+	
+	<bean id="transactionInterceptor" 
+		class="org.springframework.transaction.interceptor.TransactionInterceptor"
+		autowire="byType"/>
+
+	<bean id="transactionAdvisor"
+		class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor"
+		autowire="constructor" />
+	
+	<bean id="attributes" class="org.springframework.metadata.commons.CommonsAttributes"/>	
+	
+	<bean id="accountDao" class="com.apress.prospring.ch12.data.SqlMapClientAccountDao">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>
+	</bean>
+
+	<bean id="historyDao" class="com.apress.prospring.ch12.data.UnreliableSqlMapClientHistoryDao">
+		<property name="dataSource"><ref bean="dataSource"/></property>
+		<property name="sqlMapClient"><ref bean="sqlMapClient"/></property>		
+	</bean>		
+	
+	<bean id="accountManagerTarget" class="com.apress.prospring.ch12.business.DefaultAccountManager">
+		<property name="accountDao"><ref local="accountDao"/></property>
+		<property name="historyDao"><ref local="historyDao"/></property>
+	</bean>
+	
+	<!--
+	<bean id="accountManagerJTA" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="accountManagerJTATarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED</prop>
+				<prop key="transfer*">PROPAGATION_REQUIRED, ISOLATION_SERIALIZABLE</prop>
+				<prop key="deposit*">PROPAGATION_REQUIRED, ISOLATION_READ_COMMITTED</prop>
+			</props>
+		</property>
+	</bean>	
+	-->
+
+	<bean id="accountManagerDeclarative" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+		<property name="target"><ref bean="accountManagerTarget"/></property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="insert*">PROPAGATION_REQUIRED</prop>
+				<prop key="transfer*">PROPAGATION_REQUIRED</prop>
+				<prop key="deposit*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>	
+	
+	<bean id="accountManagerProgrammatic" class="com.apress.prospring.ch12.business.ProgrammaticTemplateAccountManager">
+		<property name="accountDao"><ref local="accountDao"/></property>
+		<property name="historyDao"><ref local="historyDao"/></property>
+		<property name="transactionManager"><ref bean="transactionManager"/></property>
+	</bean>
+	
+	<bean id="accountManager" class="com.apress.prospring.ch12.business.MetadataAccountManager">
+		<property name="accountDao"><ref local="accountDao"/></property>
+		<property name="historyDao"><ref local="historyDao"/></property>
+	</bean>
+	
+</beans>
+ 

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.apress.prospring.domain.Attachment" table="Attachments">
+        <id name="attachmentId" type="int" unsaved-value="0" >
+            <generator class="identity"/>
+        </id>
+
+		<property name="fileName" type="string" not-null="true"/>
+		<property name="contentType" type="string" not-null="true"/>
+		<property name="fileData" type="binary" not-null="true"/>		
+    </class>
+
+</hibernate-mapping>

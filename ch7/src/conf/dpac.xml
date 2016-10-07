@@ -1,0 +1,17 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <bean id="proxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+    
+    <bean id="autoBean" class="com.apress.prospring.ch7.autoproxying.AutoBean"/>
+    <bean id="otherBean" class="com.apress.prospring.ch7.autoproxying.OtherBean"/>
+    
+    <bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+           <property name="pointcut">
+               <bean class="com.apress.prospring.ch7.autoproxying.MyPointcut"/>
+           </property>
+           <property name="advice">
+               <bean class="com.apress.prospring.ch7.cflow.SimpleBeforeAdvice"/>
+           </property>
+    </bean>
+</beans>

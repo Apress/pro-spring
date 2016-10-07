@@ -1,0 +1,23 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageService" class="com.apress.prospring.ch16.remoting.jaxrpc.MessageServiceJaxRpcProxyFactoryBean">
+        <property name="serviceFactoryClass">
+            <value>org.apache.axis.client.ServiceFactory</value>
+        </property>
+        <property name="wsdlDocumentUrl">
+            <value>http://localhost:8080/remoting/services/MessageService?wsdl</value>
+        </property>
+        <property name="namespaceUri">
+            <value>http://localhost:8080/remoting/services/MessageService</value>
+        </property>
+        <property name="serviceName">
+            <value>JaxRpcMessageServiceService</value>
+        </property>
+        <property name="portName">
+            <value>MessageService</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.jaxrpc.MessageService</value>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,52 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="destination" class="org.codehaus.activemq.message.ActiveMQQueue">
+        <!-- Set the Destination Name -->
+        <constructor-arg index="0">
+            <value>BarQueue</value>
+        </constructor-arg>
+    </bean>
+    
+    <bean id="connection" class="org.springframework.jms.JmsConnectionFactoryBean">
+        <property name="connectionFactory">
+            <ref bean="connectionFactory"/>
+        </property>
+    </bean>
+    
+    <bean id="session" class="org.springframework.jms.JmsSessionFactoryBean">
+        <property name="connection">
+            <ref local="connection"/>
+        </property>
+    </bean>
+    
+    <bean id="producer" class="org.springframework.jms.JmsProducerFactoryBean">
+        <property name="destination">
+            <ref local="destination"/>
+        </property>
+        <property name="session">
+            <ref local="session"/>
+        </property>
+    </bean>
+    
+    <bean id="consumer" class="org.springframework.jms.JmsConsumerFactoryBean">
+        <property name="destination">
+            <ref local="destination"/>
+        </property>
+        <property name="session">
+            <ref local="session"/>
+        </property>
+        <property name="messageListener">
+            <ref local="messageListener"/>
+        </property>
+    </bean>
+    
+    <bean id="messageProducer" class="com.apress.prospring.ch13.jms.asynch.Producer">
+        <property name="messageProducer">
+            <ref local="producer"/>
+        </property>
+        <property name="session">
+            <ref local="session"/>
+        </property>
+    </bean>
+    <bean id="messageListener" class="com.apress.prospring.ch13.jms.asynch.Listener"/>
+</beans>

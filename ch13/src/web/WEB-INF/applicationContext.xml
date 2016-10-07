@@ -1,0 +1,36 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="messageResolverTraditional" class="com.apress.prospring.ch13.jndi.TraditionalJndiMessageResolver"/>
+    <bean id="messageResolverTemplate" class="com.apress.prospring.ch13.jndi.JndiTemplateMessageResolver"/>
+    <bean id="messageResolverFactoryBean" class="com.apress.prospring.ch13.jndi.JndiObjectFactoryBeanMessageResolver">
+        <property name="message">
+            <bean class="org.springframework.jndi.JndiObjectFactoryBean">
+                <property name="jndiName">
+                    <value>message</value>
+                </property>
+                <property name="resourceRef">
+                    <value>true</value>
+                </property>
+            </bean>
+        </property>
+    </bean>
+    <bean id="echoService" class="org.springframework.ejb.access.LocalStatelessSessionProxyFactoryBean">
+        <property name="jndiName">
+            <value>ejb/echoService</value>
+        </property>
+        <property name="resourceRef">
+            <value>true</value>
+        </property>
+        <property name="businessInterface">
+            <value>com.apress.prospring.ch13.ejb.EchoService</value>
+        </property>
+    </bean>
+    <bean id="counterServiceHome" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName">
+            <value>ejb/counterService</value>
+        </property>
+        <property name="resourceRef">
+            <value>true</value>
+        </property>
+    </bean>
+</beans>

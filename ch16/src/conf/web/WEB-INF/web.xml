@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+                         "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app>
+    <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/applicationContext.xml</param-value>
+	</context-param>
+    
+    <servlet>
+		<servlet-name>context</servlet-name>
+		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+    
+    <servlet>
+        <servlet-name>axis</servlet-name>
+        <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+	
+	<servlet>
+		<servlet-name>httpinvoker</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>caucho</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>4</load-on-startup>
+	</servlet>
+    
+    <servlet-mapping>
+        <servlet-name>axis</servlet-name>
+        <url-pattern>/services/*</url-pattern>
+    </servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>httpinvoker</servlet-name>
+		<url-pattern>/http/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>caucho</servlet-name>
+		<url-pattern>/caucho/*</url-pattern>
+	</servlet-mapping>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Secure HTTP Services</web-resource-name>
+			<url-pattern>/http/messageServiceSecure</url-pattern>
+			<url-pattern>/caucho/messageServiceSecure</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>manager</role-name>
+		</auth-constraint>
+	</security-constraint>	
+	
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>remoting</realm-name>
+	</login-config>
+	
+	<security-role>
+		<role-name>manager</role-name>
+	</security-role>
+
+</web-app>

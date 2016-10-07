@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+    <class name="com.apress.prospring.domain.Comment" table="Comments">
+        <id name="commentId" type="int" unsaved-value="0" >
+            <generator class="identity"/>
+        </id>
+
+		<property name="subject" type="string" not-null="true"/>
+		<property name="body" type="string" not-null="true"/>
+		<property name="postDate" type="timestamp" not-null="true"/>
+		<property name="entry" type="int" not-null="true"/>
+		<property name="replyTo" type="int" not-null="false"/>
+		<many-to-one name="postedBy" class="com.apress.prospring.domain.User" column="PostedBy">
+			<column name="UserId"/>
+		</many-to-one>
+		<set name="attachments" table="CommentAttachments">
+			<key column="Comment"/>
+			<many-to-many class="com.apress.prospring.domain.Attachment" column="Attachment" foreign-key="Attachment"/>
+		</set>		
+    </class>
+
+</hibernate-mapping>

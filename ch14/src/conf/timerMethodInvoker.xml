@@ -1,0 +1,37 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="target" class="com.apress.prospring.ch14.timer.FooBean"/>
+    
+    <bean id="task" class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+        <property name="targetObject">
+            <ref local="target"/>
+        </property>
+        <property name="targetMethod">
+            <value>someJob</value>
+        </property>
+        <property name="arguments">
+            <value>Hello World!</value>
+        </property>
+    </bean>
+    
+    <bean id="timerTask" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+        <property name="delay">
+            <value>1000</value>
+        </property>
+        <property name="period">
+            <value>3000</value>
+        </property>
+        <property name="timerTask">
+            <ref local="task"/>
+        </property>
+    </bean>
+    
+    <bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+        <property name="scheduledTimerTasks">
+            <list>
+                <ref local="timerTask"/>
+            </list>
+        </property>
+    </bean>
+    
+</beans>

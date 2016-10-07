@@ -1,0 +1,5 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+   <!-- <bean id="testBean" class="com.apress.prospring.ap3.NonExistentClass"/>-->
+    <bean id="testBean2" class="com.apress.prospring.ch2.HelloWorldMessageProvider"/>
+</beans>

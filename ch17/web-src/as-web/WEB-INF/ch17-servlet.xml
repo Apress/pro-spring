@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize"> <value>100000</value> </property> 
+	</bean>
+	
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles-layout.xml</value>
+			</list>
+		</property>
+	</bean>	
+	
+	<bean id="multipartResolver2"
+		class="org.springframework.web.multipart.cos.CosMultipartResolver">
+		<property name="maxUploadSize"><value>100000</value></property>
+	</bean>	
+	
+	<bean id="themeResolver" class="org.springframework.web.servlet.theme.FixedThemeResolver">
+		<property name="defaultThemeName"><value>cool</value></property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<property name="basename"><value>views</value></property>	
+	</bean>
+	
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename"><value>messages</value></property>
+    </bean>	
+	
+	<bean id="bigBrotherHandlerInterceptor" class="com.apress.prospring.ch17.web.BigBrotherHandlerInterceptor"/>
+	
+	<bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref local="bigBrotherHandlerInterceptor"/>
+			</list>
+		</property>
+		<property name="mappings">
+			<props>
+				<prop key="/index.html">indexController</prop>
+				<prop key="/pindex.html">parametrizableIndexController</prop>
+				<prop key="/product/index.html">productController</prop>
+				<prop key="/product/view.html">productController</prop>
+				<prop key="/product/edit.html">productFormController</prop>
+				<prop key="/product/image.html">productImageFormController</prop>
+				<prop key="/registration/wizard.html">registrationController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="plainTextView" class="com.apress.prospring.ch17.web.views.PlainTextView"/>
+	
+	<!-- ====================================== Controllers ============================================== -->
+	
+	<!-- Registration -->
+	<bean id="registrationController" class="com.apress.prospring.ch17.web.registration.RegistrationController">
+		<property name="validator"><ref bean="productValidator"/></property>	
+	</bean>
+	
+	<!-- Index -->
+	<bean id="indexController" class="com.apress.prospring.ch17.web.IndexController"/>
+	<bean id="parametrizableIndexController" class="com.apress.prospring.ch17.web.ParametrizableIndexController">
+		<property name="viewName"><value>products-index</value></property>
+	</bean>
+	
+	<!-- Product -->
+	
+	<bean id="productController" class="com.apress.prospring.ch17.web.product.ProductController">
+		<property name="methodNameResolver"><ref local="productMethodNameResolver1"/></property>
+	</bean>
+	
+	<bean id="productFormController" class="com.apress.prospring.ch17.web.product.ProductFormController">
+		<property name="validator"><ref bean="productValidator"/></property>	
+	</bean>
+	
+	<bean id="productImageFormController" class="com.apress.prospring.ch17.web.product.ProductImageFormController"/>
+	
+	<bean id="productMethodNameResolver1" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/product/view.html">view</prop>
+				<prop key="/product/index.html">index</prop>
+				<prop key="/product/v*.html">view</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="productMethodNameResolver2" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName"><value>method</value></property>
+		<property name="defaultMethodName"><value>view</value></property>
+	</bean>
+	
+
+</beans>

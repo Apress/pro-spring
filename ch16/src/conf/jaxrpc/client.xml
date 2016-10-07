@@ -1,0 +1,26 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="helloWorldService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean">
+        <property name="serviceFactoryClass">
+            <value>org.apache.axis.client.ServiceFactory</value>
+        </property>
+        <property name="wsdlDocumentUrl">
+            <value>http://localhost:8080/remoting/services/HelloWorld?wsdl</value>
+        </property>
+        <property name="namespaceUri">
+            <value>http://localhost:8080/remoting/services/HelloWorld</value>
+        </property>
+        <property name="serviceName">
+            <value>JaxRpcHelloWorldService</value>
+        </property>
+        <property name="portName">
+            <value>HelloWorld</value>
+        </property>
+        <property name="portInterface">
+            <value>com.apress.prospring.ch16.remoting.rmi.RemoteHelloWorld</value>
+        </property>
+        <property name="serviceInterface">
+            <value>com.apress.prospring.ch16.remoting.HelloWorld</value>
+        </property>
+    </bean>
+</beans>

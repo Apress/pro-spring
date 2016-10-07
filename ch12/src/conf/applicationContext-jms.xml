@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="queueConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>UIL2ConnectionFactory</value></property>
+	</bean>
+	
+	<!-- Test queue -->
+	<bean id="springQueue" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName"><value>java:comp/env/queue/springQueue</value></property>
+	</bean>
+	
+	<bean id="accountManagerJTATarget" class="com.apress.prospring.ch12.business.JTAAccountManager">
+		<property name="accountDao"><ref bean="accountDao"/></property>
+		<property name="historyDao"><ref bean="historyDao"/></property>
+		<property name="connectionFactory"><ref bean="queueConnectionFactory"/></property>
+		<property name="queue"><ref bean="springQueue"/></property>
+	</bean>	
+
+</beans>

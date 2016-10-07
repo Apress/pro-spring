@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+ 
+<sqlMap>
+	
+	<typeAlias type="com.apress.prospring.domain.Audit" alias="audit"/>
+	
+	<resultMap class="audit" id="result">
+		<result property="auditId" column="AuditId"/>
+		<result property="user" column="User"/>
+		<result property="auditDate" column="AuditDate"/>
+		<result property="data" column="Data"/>
+	</resultMap>
+	
+	<select id="getAllAudit" resultMap="result">
+		select
+			*
+		from
+			Audit
+		order by
+			AuditDate
+	</select>
+	
+	<insert id="insertAudit" parameterClass="audit">
+		insert into Audit (User, AuditDate, Data) values (#user#, #auditDate#, #data#)
+		<selectKey keyProperty="auditId" resultClass="int">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+
+</sqlMap>

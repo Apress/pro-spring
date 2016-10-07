@@ -1,0 +1,25 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="simpleBean1" class="com.apress.prospring.ch4.depcheck.SimpleBean" dependency-check="simple">
+        <property name="someInt">
+            <value>16</value>
+        </property>
+    </bean>  
+    
+    <bean id="simpleBean2" class="com.apress.prospring.ch4.depcheck.SimpleBean" dependency-check="objects">
+        <property name="nestedSimpleBean">
+            <ref local="nestedSimpleBean"/>
+        </property>
+    </bean>  
+    
+    <bean id="simpleBean3" class="com.apress.prospring.ch4.depcheck.SimpleBean" dependency-check="all">
+        <property name="someInt">
+            <value>16</value>
+        </property>
+        <!-- <property name="nestedSimpleBean">
+            <ref local="nestedSimpleBean"/>
+        </property> -->
+    </bean>    
+    
+    <bean id="nestedSimpleBean" class="com.apress.prospring.ch4.depcheck.SimpleBean"/>
+</beans>
